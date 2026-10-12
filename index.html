@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plateforme de Tâches E-commerce - Cloud Supabase</title>
+    <title>Market Express - Plateforme E-commerce</title>
+
+    <!-- LOGO MARKET EXPRESS : FAVICON ET ÉCRAN D'ACCUEIL (PWA / MOBILE) -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co/L181Yy0/37365.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/L181Yy0/37365.jpg">
+    <meta name="apple-mobile-web-app-title" content="Market Express">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,6 +24,18 @@
         body { font-family: 'Inter', sans-serif; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes scrollUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+        .animate-scroll {
+            display: flex;
+            flex-direction: column;
+            animation: scrollUp 15s linear infinite;
+        }
+        .animate-scroll:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 h-full flex flex-col justify-between overflow-x-hidden transition-colors duration-300">
@@ -101,7 +121,7 @@
         <!-- HEADER TOP BANNER -->
         <div class="bg-white dark:bg-gradient-to-r dark:from-slate-900 dark:to-indigo-950 p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center transition-colors duration-300">
             <div class="flex items-center gap-2">
-                <span id="header-brand-badge" class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold">SHEIN</span>
+                <span id="header-brand-badge" class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold">MARKET EXPRESS</span>
                 <span id="page-title-display" class="text-sm font-medium text-slate-600 dark:text-slate-300">pagina de inicio</span>
             </div>
             <div class="flex items-center gap-3">
@@ -217,6 +237,58 @@
                         <div class="w-12 h-12 rounded-full bg-indigo-500/20 text-indigo-500 flex items-center justify-center text-lg"><i class="fa-solid fa-envelope"></i></div>
                         <span class="text-[11px] text-slate-700 dark:text-slate-300 font-medium">Correo</span>
                     </button>
+                </div>
+
+                <!-- SECTION: DINÁMICA DE COMISIONES (DÉFILEMENT EN DIRECT DES RETRAITS) -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-lg space-y-3">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-blue-500"></i> Dinámica de comisiones
+                    </h3>
+                    <div class="h-36 overflow-hidden relative border border-slate-100 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 p-2">
+                        <div class="animate-scroll space-y-2.5 text-xs">
+                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <span class="text-slate-500 font-medium">10-10-2026</span>
+                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">120,637.00</span></span>
+                                <span class="text-slate-400 font-mono text-[11px]">ma***98@gmail.com</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <span class="text-slate-500 font-medium">10-10-2026</span>
+                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">20,000.00</span></span>
+                                <span class="text-slate-400 font-mono text-[11px]">ol***z2@gmail.com</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <span class="text-slate-500 font-medium">10-10-2026</span>
+                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">205.00</span></span>
+                                <span class="text-slate-400 font-mono text-[11px]">ed***07@gmail.com</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <span class="text-slate-500 font-medium">10-10-2026</span>
+                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">5,600.00</span></span>
+                                <span class="text-slate-400 font-mono text-[11px]">fr***es@gmail.com</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <span class="text-slate-500 font-medium">10-10-2026</span>
+                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">14,931.45</span></span>
+                                <span class="text-slate-400 font-mono text-[11px]">ca***72@gmail.com</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <span class="text-slate-500 font-medium">10-10-2026</span>
+                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">36,059.45</span></span>
+                                <span class="text-slate-400 font-mono text-[11px]">jo***96@gmail.com</span>
+                            </div>
+                            <!-- Duplication fluide -->
+                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <span class="text-slate-500 font-medium">10-10-2026</span>
+                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">120,637.00</span></span>
+                                <span class="text-slate-400 font-mono text-[11px]">ma***98@gmail.com</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+                                <span class="text-slate-500 font-medium">10-10-2026</span>
+                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">20,000.00</span></span>
+                                <span class="text-slate-400 font-mono text-[11px]">ol***z2@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-lg space-y-4">
@@ -365,7 +437,7 @@
                 </div>
             </div>
 
-            <!-- VIEW 4: ORDEN (PAGE DE REÇU ET HISTORIQUE) -->
+            <!-- VIEW 4: ORDEN -->
             <div id="view-orden" class="space-y-4 hidden">
                 <div class="flex justify-between items-center">
                     <h3 class="text-sm font-bold uppercase tracking-wider">Historial de pedidos</h3>
@@ -376,7 +448,7 @@
                 </div>
             </div>
 
-            <!-- VIEW 5: PERSONAL ("MI") AVEC LE BLOC CHEVAUCHANT -->
+            <!-- VIEW 5: PERSONAL ("MI") AVEC BLOC CHEVAUCHANT -->
             <div id="view-personal" class="space-y-4 hidden">
                 <div class="bg-gradient-to-b from-[#3b82f6] to-[#1e3a8a] text-white rounded-3xl p-6 shadow-xl space-y-6 relative overflow-hidden pb-12">
                     <div class="flex items-center justify-between">
@@ -396,7 +468,6 @@
                     </div>
                 </div>
 
-                <!-- Bloc du solde chevauchant -->
                 <div class="mx-4 -mt-10 bg-slate-900 text-white rounded-2xl p-5 shadow-2xl border border-slate-800 flex justify-between items-center relative z-10">
                     <div>
                         <div class="text-xs text-slate-400 mb-1 flex items-center gap-2">
@@ -559,7 +630,7 @@
             const password = document.getElementById('reg-password').value.trim();
 
             const { error } = await supabaseClient.from('users').insert([{
-                username, phone, password, balance: 500.00, earnings_today: 0, earnings_total: 0, orders: [], tasks: []
+                username, phone, password, balance: 500.00, earnings_today: 0, earnings_total: 0, orders: [], tasks: [], daily_completed_tasks: 0, last_task_date: ""
             }]);
 
             if (error) {
@@ -641,7 +712,9 @@
                 earnings_today: currentUserData.earnings_today,
                 earnings_total: currentUserData.earnings_total,
                 orders: currentUserData.orders,
-                tasks: currentUserData.tasks
+                tasks: currentUserData.tasks,
+                daily_completed_tasks: currentUserData.daily_completed_tasks,
+                last_task_date: currentUserData.last_task_date
             }).eq('username', currentUsername);
         }
 
@@ -756,6 +829,17 @@
                 return showToast("Aucune tâche en attente assignée par le superviseur.", "error");
             }
 
+            // VÉRIFICATION DE LA LIMITE DE 5 TÂCHES PAR JOUR
+            const todayStr = new Date().toLocaleDateString('fr-FR');
+            if (currentUserData.last_task_date !== todayStr) {
+                currentUserData.last_task_date = todayStr;
+                currentUserData.daily_completed_tasks = 0;
+            }
+
+            if ((currentUserData.daily_completed_tasks || 0) >= 5) {
+                return showToast("Limite atteinte ! Vous ne pouvez accomplir que 5 tâches par jour.", "error");
+            }
+
             document.getElementById('modal-matching').classList.remove('hidden');
 
             setTimeout(() => {
@@ -787,6 +871,9 @@
                 showInsufficientBalanceModal(userBalance, needed);
                 return;
             }
+
+            // Incrémenter le compteur de tâches du jour
+            currentUserData.daily_completed_tasks = (currentUserData.daily_completed_tasks || 0) + 1;
 
             currentUserData.balance -= productPrice;
             currentUserData.balance += (productPrice + currentActiveOrder.commission);
