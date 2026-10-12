@@ -42,7 +42,7 @@
 
     <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
 
-    <!-- AUTH VIEW -->
+    <!-- AUTH VIEW (CLIENT) -->
     <div id="auth-view" class="flex-1 flex flex-col justify-center px-6 py-12 max-w-md w-full mx-auto">
         <div class="text-center mb-6">
             <div class="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg mb-2 uppercase tracking-wider">
@@ -55,15 +55,15 @@
             </div>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-colors duration-300">
-            <div class="flex bg-slate-100 dark:bg-slate-950 p-1 rounded-xl mb-6 border border-slate-200 dark:border-slate-800">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl transition-colors duration-300 space-y-4">
+            <div class="flex bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
                 <button onclick="switchAuthTab('login')" id="tab-login-btn" class="flex-1 py-2 text-sm font-semibold rounded-lg transition-all bg-blue-600 text-white shadow-md">Iniciar sesión</button>
                 <button onclick="switchAuthTab('register')" id="tab-register-btn" class="flex-1 py-2 text-sm font-semibold rounded-lg transition-all text-slate-500 dark:text-slate-400">registro</button>
             </div>
 
             <!-- Register Form -->
             <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4 hidden">
-                <h2 class="text-xl font-bold mb-4 text-slate-900 dark:text-white uppercase tracking-wide">registro de cuenta</h2>
+                <h2 class="text-xl font-bold mb-2 text-slate-900 dark:text-white uppercase tracking-wide">registro de cuenta</h2>
                 <div>
                     <div class="relative flex items-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 focus-within:border-blue-500">
                         <i class="fa-solid fa-user text-blue-500 text-xs mr-3"></i>
@@ -95,7 +95,7 @@
 
             <!-- Login Form -->
             <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
-                <h2 class="text-xl font-bold mb-4 text-slate-900 dark:text-white uppercase tracking-wide">Iniciar sesión</h2>
+                <h2 class="text-xl font-bold mb-2 text-slate-900 dark:text-white uppercase tracking-wide">Iniciar sesión</h2>
                 <div>
                     <div class="relative flex items-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 focus-within:border-blue-500">
                         <i class="fa-solid fa-user text-blue-500 text-xs mr-3"></i>
@@ -112,10 +112,120 @@
                     Iniciar sesión
                 </button>
             </form>
+
+            <!-- Lien discret vers l'interface de Superviseur Administratif -->
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 text-center">
+                <button onclick="showAdminLoginView()" class="text-xs text-slate-400 hover:text-amber-500 font-medium transition-colors">
+                    <i class="fa-solid fa-shield-halved mr-1"></i> Espace Superviseur Administratif
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- APP VIEW -->
+    <!-- SUPERVISOR AUTH / LOGIN VIEW -->
+    <div id="admin-auth-view" class="hidden flex-1 flex flex-col justify-center px-6 py-12 max-w-md w-full mx-auto">
+        <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-6 shadow-2xl space-y-4 text-white">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-bold uppercase tracking-wider">Superviseur Admin</h2>
+                        <p class="text-[10px] text-slate-400">Authentification requise</p>
+                    </div>
+                </div>
+                <button onclick="hideAdminLoginView()" class="text-slate-400 hover:text-white text-xs"><i class="fa-solid fa-xmark text-base"></i></button>
+            </div>
+            
+            <form onsubmit="handleAdminLogin(event)" class="space-y-3 pt-2 text-xs">
+                <div>
+                    <label class="text-slate-400 block mb-1">Identifiant Administrateur</label>
+                    <input type="text" id="admin-user-id" required placeholder="admin" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="text-slate-400 block mb-1">Clé Secrète / Mot de passe</label>
+                    <input type="password" id="admin-pass-id" required placeholder="Mot de passe administrateur" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-amber-500">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all uppercase tracking-wider">
+                    Accéder au panneau superviseur
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SUPERVISOR PANEL VIEW (DÉDIÉ ADMINISTRATEUR) -->
+    <div id="admin-panel-view" class="hidden flex-1 flex flex-col max-w-lg w-full mx-auto relative overflow-hidden pb-10">
+        <div class="bg-gradient-to-r from-amber-600 to-red-600 p-4 text-white flex justify-between items-center shadow-md">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-lg"></i>
+                <span class="text-sm font-bold uppercase tracking-wider">Superviseur Administratif</span>
+            </div>
+            <button onclick="logoutAdmin()" class="bg-black/30 hover:bg-black/50 text-xs px-3 py-1.5 rounded-lg font-bold transition-all">Déconnexion</button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-4 space-y-4">
+            <!-- Tabs Admin -->
+            <div class="flex bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold">
+                <button onclick="switchAdminSubTab('users')" id="admin-subtab-users-btn" class="flex-1 py-2.5 rounded-lg bg-blue-600 text-white transition-all">Utilisateurs inscrits</button>
+                <button onclick="switchAdminSubTab('tasks')" id="admin-subtab-tasks-btn" class="flex-1 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 transition-all">Attribuer Tâches & Accessoires</button>
+            </div>
+
+            <!-- Subtab 1: Users list -->
+            <div id="admin-subtab-users" class="space-y-3">
+                <div class="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400 px-1">
+                    <span>Liste des comptes enregistrés (Cloud)</span>
+                    <button onclick="renderAdminUsers()" class="text-blue-600 dark:text-blue-400 hover:underline font-bold"><i class="fa-solid fa-rotate mr-1"></i>Actualiser</button>
+                </div>
+                <div id="admin-users-list" class="space-y-3"></div>
+            </div>
+
+            <!-- Subtab 2: Custom Tasks Management -->
+            <div id="admin-subtab-tasks" class="space-y-4 hidden">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4 shadow-lg">
+                    <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Créer et injecter une tâche personnalisée</h3>
+                    <form onsubmit="adminCreateCustomTask(event)" class="space-y-3 text-xs">
+                        <div>
+                            <label class="text-slate-600 dark:text-slate-400 block mb-1">Cible (Pseudo exact ou 'ALL' pour tous)</label>
+                            <input type="text" id="adm-task-target" required placeholder="Ex: Moussa ou ALL" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="text-slate-600 dark:text-slate-400 block mb-1">Nom du produit</label>
+                            <input type="text" id="adm-task-name" required placeholder="Ex: Cage extra-large pour chien" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-slate-600 dark:text-slate-400 block mb-1">Prix Total du produit (FCFA)</label>
+                                <input type="number" id="adm-task-price" required placeholder="Ex: 56470" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-3 text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="text-slate-600 dark:text-slate-400 block mb-1">Montant du revenu / Commission (FCFA)</label>
+                                <input type="number" id="adm-task-comm" required placeholder="Ex: 81881.50" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-3 text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-slate-600 dark:text-slate-400 block mb-1">Photo du produit</label>
+                            <div class="flex items-center gap-3">
+                                <label class="flex-1 cursor-pointer bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-500 rounded-xl px-4 py-3 text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2 transition-all">
+                                    <i class="fa-solid fa-camera text-blue-500"></i>
+                                    <span id="file-chosen-label">Choisir une photo...</span>
+                                    <input type="file" id="adm-task-file" accept="image/*" onchange="handleAdminFileSelect(event)" class="hidden">
+                                </label>
+                            </div>
+                            <div id="admin-img-preview-container" class="mt-2 hidden">
+                                <img id="admin-img-preview" src="" alt="Aperçu" class="w-20 h-20 rounded-xl object-cover border border-slate-300 dark:border-slate-700">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all">
+                            Envoyer la tâche au cloud
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- APP VIEW (CLIENT) -->
     <div id="app-view" class="hidden flex-1 flex flex-col max-w-lg w-full mx-auto relative overflow-hidden pb-20">
         
         <!-- HEADER TOP BANNER -->
@@ -132,83 +242,6 @@
 
         <!-- MAIN SCROLLABLE CONTENT AREA -->
         <div class="flex-1 overflow-y-auto p-4 space-y-4">
-
-            <!-- BOUTON SUPERVISEUR TOUT EN HAUT DE L'ÉCRAN -->
-            <div class="w-full">
-                <button onclick="promptAdminAccess()" class="w-full bg-gradient-to-r from-amber-600 via-red-600 to-rose-700 hover:from-amber-500 hover:to-red-600 text-white font-bold p-4 rounded-2xl shadow-xl flex items-center justify-center gap-3 text-xs uppercase tracking-wider transition-all border border-amber-500/30">
-                    <i class="fa-solid fa-shield-halved text-lg animate-pulse"></i>
-                    <span>PANNEAU SUPERVISEUR & GESTION DES TÂCHES</span>
-                </button>
-            </div>
-
-            <!-- SUPERVISOR PANEL VIEW -->
-            <div id="view-admin" class="space-y-4 hidden">
-                <div class="bg-gradient-to-r from-amber-600 to-red-600 rounded-2xl p-5 shadow-xl text-white space-y-2">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-base font-bold uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-2"></i> Panneau Superviseur & Admin</h2>
-                        <button onclick="switchTab('inicio')" class="bg-black/30 text-xs px-3 py-1 rounded-lg hover:bg-black/50 font-bold">Fermer</button>
-                    </div>
-                    <p class="text-xs text-amber-100">Supervisez tous les inscrits (synchronisés globalement via Supabase), modifiez leurs soldes et injectez des tâches avec photo.</p>
-                </div>
-
-                <!-- Tabs Admin -->
-                <div class="flex bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold">
-                    <button onclick="switchAdminSubTab('users')" id="admin-subtab-users-btn" class="flex-1 py-2.5 rounded-lg bg-blue-600 text-white transition-all">Utilisateurs inscrits</button>
-                    <button onclick="switchAdminSubTab('tasks')" id="admin-subtab-tasks-btn" class="flex-1 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 transition-all">Attribuer Tâches & Accessoires</button>
-                </div>
-
-                <!-- Subtab 1: Users list -->
-                <div id="admin-subtab-users" class="space-y-3">
-                    <div class="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400 px-1">
-                        <span>Liste des comptes enregistrés (Cloud)</span>
-                        <button onclick="renderAdminUsers()" class="text-blue-600 dark:text-blue-400 hover:underline font-bold"><i class="fa-solid fa-rotate mr-1"></i>Actualiser</button>
-                    </div>
-                    <div id="admin-users-list" class="space-y-3"></div>
-                </div>
-
-                <!-- Subtab 2: Custom Tasks Management -->
-                <div id="admin-subtab-tasks" class="space-y-4 hidden">
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-4 shadow-lg">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Créer et injecter une tâche personnalisée</h3>
-                        <form onsubmit="adminCreateCustomTask(event)" class="space-y-3 text-xs">
-                            <div>
-                                <label class="text-slate-600 dark:text-slate-400 block mb-1">Cible (Pseudo exact ou 'ALL' pour tous)</label>
-                                <input type="text" id="adm-task-target" required placeholder="Ex: Moussa ou ALL" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label class="text-slate-600 dark:text-slate-400 block mb-1">Nom du produit</label>
-                                <input type="text" id="adm-task-name" required placeholder="Ex: Cage extra-large pour chien" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500">
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="text-slate-600 dark:text-slate-400 block mb-1">Prix Total du produit (FCFA)</label>
-                                    <input type="number" id="adm-task-price" required placeholder="Ex: 56470" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-3 text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500">
-                                </div>
-                                <div>
-                                    <label class="text-slate-600 dark:text-slate-400 block mb-1">Montant du revenu / Commission (FCFA)</label>
-                                    <input type="number" id="adm-task-comm" required placeholder="Ex: 81881.50" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-3 text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="text-slate-600 dark:text-slate-400 block mb-1">Photo du produit</label>
-                                <div class="flex items-center gap-3">
-                                    <label class="flex-1 cursor-pointer bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-500 rounded-xl px-4 py-3 text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2 transition-all">
-                                        <i class="fa-solid fa-camera text-blue-500"></i>
-                                        <span id="file-chosen-label">Choisir une photo...</span>
-                                        <input type="file" id="adm-task-file" accept="image/*" onchange="handleAdminFileSelect(event)" class="hidden">
-                                    </label>
-                                </div>
-                                <div id="admin-img-preview-container" class="mt-2 hidden">
-                                    <img id="admin-img-preview" src="" alt="Aperçu" class="w-20 h-20 rounded-xl object-cover border border-slate-300 dark:border-slate-700">
-                                </div>
-                            </div>
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all">
-                                Envoyer la tâche au cloud
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
 
             <!-- VIEW 1: HOME -->
             <div id="view-inicio" class="space-y-4">
@@ -239,7 +272,7 @@
                     </button>
                 </div>
 
-                <!-- SECTION: DINÁMICA DE COMISIONES (DÉFILEMENT EN DIRECT DES RETRAITS) -->
+                <!-- SECTION: DINÁMICA DE COMISIONES -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-lg space-y-3">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-white flex items-center gap-2">
                         <i class="fa-solid fa-chart-line text-blue-500"></i> Dinámica de comisiones
@@ -265,27 +298,6 @@
                                 <span class="text-slate-500 font-medium">10-10-2026</span>
                                 <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">5,600.00</span></span>
                                 <span class="text-slate-400 font-mono text-[11px]">fr***es@gmail.com</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
-                                <span class="text-slate-500 font-medium">10-10-2026</span>
-                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">14,931.45</span></span>
-                                <span class="text-slate-400 font-mono text-[11px]">ca***72@gmail.com</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
-                                <span class="text-slate-500 font-medium">10-10-2026</span>
-                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">36,059.45</span></span>
-                                <span class="text-slate-400 font-mono text-[11px]">jo***96@gmail.com</span>
-                            </div>
-                            <!-- Duplication fluide -->
-                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
-                                <span class="text-slate-500 font-medium">10-10-2026</span>
-                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">120,637.00</span></span>
-                                <span class="text-slate-400 font-mono text-[11px]">ma***98@gmail.com</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
-                                <span class="text-slate-500 font-medium">10-10-2026</span>
-                                <span class="font-semibold text-slate-700 dark:text-slate-300">retirar <span class="text-emerald-600 font-bold">20,000.00</span></span>
-                                <span class="text-slate-400 font-mono text-[11px]">ol***z2@gmail.com</span>
                             </div>
                         </div>
                     </div>
@@ -364,7 +376,7 @@
                     
                     <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-2 text-xs text-slate-600 dark:text-slate-400">
                         <div class="font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide">Consejos</div>
-                        <p>1. Comuníquese con la persona a cargo para informar la información del monto del retiro.</p>
+                        <p>1. Comuníquese avec la persona a cargo para informar la información del monto del retiro.</p>
                         <p>2. El tiempo de retiro puede retrasarse hasta 24 horas, el tiempo específico de llegada está sujeto al banco.</p>
                     </div>
 
@@ -448,7 +460,7 @@
                 </div>
             </div>
 
-            <!-- VIEW 5: PERSONAL ("MI") AVEC BLOC CHEVAUCHANT -->
+            <!-- VIEW 5: PERSONAL ("MI") -->
             <div id="view-personal" class="space-y-4 hidden">
                 <div class="bg-gradient-to-b from-[#3b82f6] to-[#1e3a8a] text-white rounded-3xl p-6 shadow-xl space-y-6 relative overflow-hidden pb-12">
                     <div class="flex items-center justify-between">
@@ -478,25 +490,6 @@
                     </div>
                     <button onclick="refreshUserData()" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-slate-700 transition-all border border-slate-700">
                         <i class="fa-solid fa-rotate text-xs"></i>
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-4 gap-2 text-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-lg">
-                    <button onclick="switchTab('recargar')" class="flex flex-col items-center gap-1.5 group">
-                        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 dark:text-blue-400 flex items-center justify-center text-lg group-hover:scale-105 transition-transform"><i class="fa-solid fa-wallet"></i></div>
-                        <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300">Recargar</span>
-                    </button>
-                    <button onclick="switchTab('retiro')" class="flex flex-col items-center gap-1.5 group">
-                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 dark:text-amber-400 flex items-center justify-center text-lg group-hover:scale-105 transition-transform"><i class="fa-solid fa-money-bill-transfer"></i></div>
-                        <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300">Retiro</span>
-                    </button>
-                    <button onclick="showToast('Lien de parrainage copié !', 'success')" class="flex flex-col items-center gap-1.5 group">
-                        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 flex items-center justify-center text-lg group-hover:scale-105 transition-transform"><i class="fa-solid fa-chart-pie"></i></div>
-                        <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300">invitación</span>
-                    </button>
-                    <button onclick="switchTab('personal')" class="flex flex-col items-center gap-1.5 group">
-                        <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 flex items-center justify-center text-lg group-hover:scale-105 transition-transform"><i class="fa-solid fa-user-gear"></i></div>
-                        <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300">personal</span>
                     </button>
                 </div>
             </div>
@@ -578,18 +571,6 @@
         </div>
     </div>
 
-    <!-- MODAL: ADMIN PASSWORD -->
-    <div id="modal-admin-pass" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-sm w-full p-6 space-y-4 text-center">
-            <h3 class="text-base font-bold uppercase">Accès Superviseur Sécurisé</h3>
-            <input type="password" id="admin-secret-pass-input" placeholder="Mot de passe..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm text-center focus:outline-none">
-            <div class="flex gap-2">
-                <button onclick="closeModal('modal-admin-pass')" class="flex-1 bg-slate-200 dark:bg-slate-800 py-3 rounded-xl text-xs font-bold">Annuler</button>
-                <button onclick="verifyAdminPassword()" class="flex-1 bg-amber-600 text-white py-3 rounded-xl text-xs font-bold">Valider</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         const SUPABASE_URL = 'https://xmgtyuurxgpbuxfybdec.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_ihuLR6wtZC8l1O_glv2Zsg_ekdqK1rC';
@@ -621,6 +602,37 @@
                 loginForm.classList.add('hidden');
                 regForm.classList.remove('hidden');
             }
+        }
+
+        function showAdminLoginView() {
+            document.getElementById('auth-view').classList.add('hidden');
+            document.getElementById('admin-auth-view').classList.remove('hidden');
+        }
+
+        function hideAdminLoginView() {
+            document.getElementById('admin-auth-view').classList.add('hidden');
+            document.getElementById('auth-view').classList.remove('hidden');
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('admin-user-id').value.trim();
+            const pass = document.getElementById('admin-pass-id').value.trim();
+
+            if (user === "admin" && pass === adminMasterPassword) {
+                document.getElementById('admin-auth-view').classList.add('hidden');
+                document.getElementById('admin-panel-view').classList.remove('hidden');
+                renderAdminUsers();
+                showToast("Accès superviseur autorisé.", "success");
+            } else {
+                showToast("Identifiants administrateur incorrects.", "error");
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('admin-panel-view').classList.add('hidden');
+            document.getElementById('auth-view').classList.remove('hidden');
+            showToast("Déconnecté de l'espace superviseur.", "success");
         }
 
         async function handleRegister(e) {
@@ -726,16 +738,6 @@
             showToast("Déconnecté.", "success");
         }
 
-        function promptAdminAccess() { document.getElementById('modal-admin-pass').classList.remove('hidden'); }
-        function verifyAdminPassword() {
-            const pass = document.getElementById('admin-secret-pass-input').value.trim();
-            if (pass === adminMasterPassword) {
-                closeModal('modal-admin-pass');
-                switchTab('admin');
-                showToast("Panneau superviseur ouvert.", "success");
-            } else { showToast("Mot de passe incorrect.", "error"); }
-        }
-
         async function renderAdminUsers() {
             const container = document.getElementById('admin-users-list');
             const { data: users, error } = await supabaseClient.from('users').select('*');
@@ -778,7 +780,6 @@
             await supabaseClient.from('users').update({ balance: val }).eq('username', uname);
             showToast(`Solde de ${uname} mis à jour dans le cloud !`, "success");
             renderAdminUsers();
-            if (uname === currentUsername) refreshUserData();
         }
 
         function handleAdminFileSelect(event) {
@@ -819,7 +820,6 @@
                     showToast(`Tâche envoyée à ${target} !`, "success");
                 } else { showToast("Utilisateur introuvable", "error"); }
             }
-            if (currentUsername) refreshUserData();
         }
 
         let currentActiveOrder = null;
@@ -829,7 +829,6 @@
                 return showToast("Aucune tâche en attente assignée par le superviseur.", "error");
             }
 
-            // VÉRIFICATION DE LA LIMITE DE 5 TÂCHES PAR JOUR
             const todayStr = new Date().toLocaleDateString('fr-FR');
             if (currentUserData.last_task_date !== todayStr) {
                 currentUserData.last_task_date = todayStr;
@@ -844,10 +843,8 @@
 
             setTimeout(() => {
                 document.getElementById('modal-matching').classList.add('hidden');
-                const task = currentUserData.tasks.shift();
-                saveUserDataToCloud();
-                updateUIState();
-
+                const task = currentUserData.tasks[0]; // Aperçu sans dépiler immédiatement
+                
                 currentActiveOrder = { product: task.product, commission: task.commission };
                 document.getElementById('order-item-title').innerText = task.product.name;
                 document.getElementById('order-item-img').src = task.product.image;
@@ -872,13 +869,16 @@
                 return;
             }
 
-            // Incrémenter le compteur de tâches du jour
             currentUserData.daily_completed_tasks = (currentUserData.daily_completed_tasks || 0) + 1;
-
             currentUserData.balance -= productPrice;
             currentUserData.balance += (productPrice + currentActiveOrder.commission);
             currentUserData.earnings_today += currentActiveOrder.commission;
             currentUserData.earnings_total += currentActiveOrder.commission;
+
+            // Retirer définitivement la tâche accomplie de la liste
+            if (currentUserData.tasks && currentUserData.tasks.length > 0) {
+                currentUserData.tasks.shift();
+            }
 
             if (!currentUserData.orders) currentUserData.orders = [];
             currentUserData.orders.unshift({
@@ -982,13 +982,12 @@
         }
 
         function switchTab(tab) {
-            ['inicio', 'recargar', 'retiro', 'tarea', 'orden', 'personal', 'admin'].forEach(t => {
+            ['inicio', 'recargar', 'retiro', 'tarea', 'orden', 'personal'].forEach(t => {
                 const el = document.getElementById(`view-${t}`);
                 if (el) el.classList.add('hidden');
             });
             const target = document.getElementById(`view-${tab}`);
             if (target) target.classList.remove('hidden');
-            if (tab === 'admin') renderAdminUsers();
             if (tab === 'orden') renderOrdersHistory();
         }
 
@@ -1011,6 +1010,8 @@
 
         window.onload = function() {
             document.getElementById('app-view').classList.add('hidden');
+            document.getElementById('admin-auth-view').classList.add('hidden');
+            document.getElementById('admin-panel-view').classList.add('hidden');
             document.getElementById('auth-view').classList.remove('hidden');
         }
     </script>
